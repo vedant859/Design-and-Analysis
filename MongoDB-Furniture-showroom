@@ -1,0 +1,40 @@
+use FurnitureDB
+
+db.Furniture.insertMany([
+  {name: "Sofa", type: "Seating", price: 25000},
+  {name: "Dining Table", type: "Table", price: 18000},
+  {name: "Bed", type: "Bedroom", price: 30000},
+  {name: "Chair", type: "Seating", price: 2500},
+  {name: "Cupboard", type: "Storage", price: 12000}
+])
+
+db.Staff.insertMany([
+  {name: "Amit", gender: "Male"},
+  {name: "Neha", gender: "Female"},
+  {name: "Rahul", gender: "Male"},
+  {name: "Priya", gender: "Female"},
+  {name: "Karan", gender: "Male"}
+])
+
+db.Sections.insertMany([
+  {name: "Living Room"},
+  {name: "Bedroom"},
+  {name: "Dining"},
+  {name: "Office"},
+  {name: "Outdoor"}
+])
+
+db.Customers.insertMany([
+  {name: "Milind", product: "Sofa"},
+  {name: "Ravi", product: "Chair"},
+  {name: "Priya", product: "Bed"},
+  {name: "Neha", product: "Dining Table"},
+  {name: "Amit", product: "Cupboard"}
+])
+
+______________________________________________________
+a. List different furniture types.
+db.Furniture.distinct("type")
+_______________________________________________________
+b. List names of all male staff.
+db.Staff.find({gender: "Male"}, {name: 1, _id: 0})
