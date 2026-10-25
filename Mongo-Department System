@@ -1,0 +1,25 @@
+use DepartmentDB
+
+db.Students.insertMany([
+  {studentId: 1, name: "Amit", gender: "Male", area: "Pune"},
+  {studentId: 2, name: "Neha", gender: "Female", area: "Mumbai"},
+  {studentId: 3, name: "Rahul", gender: "Male", area: "Pune"},
+  {studentId: 4, name: "Priya", gender: "Female", area: "Nashik"},
+  {studentId: 5, name: "Karan", gender: "Male", area: "Pune"}
+])
+
+db.Courses.insertMany([
+  {courseId: 101, name: "Python"},
+  {courseId: 102, name: "Java"},
+  {courseId: 103, name: "MongoDB"},
+  {courseId: 104, name: "Data Science"},
+  {courseId: 105, name: "Web Development"}
+])
+
+db.Marks.insertMany([
+  {studentId: 1, course: "Python", marks: 85},
+  {studentId: 2, course: "Java", marks: 75},
+  {studentId: 3, course: "Python", marks: 92},
+  {studentId: 4, course: "MongoDB", marks: 68},
+  {studentId: 5, course: "Python", marks: 88}
+])
