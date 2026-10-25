@@ -23,3 +23,14 @@ db.Marks.insertMany([
   {studentId: 4, course: "MongoDB", marks: 68},
   {studentId: 5, course: "Python", marks: 88}
 ])
+
+
+___________________________________________________________
+
+80% 
+db.Marks.countDocuments({marks: {$gt: 80}})
+
+_____________________________________________________________
+
+b. Count students registered for Python.
+db.Marks.countDocuments({course: "Python"})
