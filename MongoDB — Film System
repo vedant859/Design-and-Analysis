@@ -1,0 +1,27 @@
+use FilmDB
+
+db.Movies.insertMany([
+  {title: "Sholay", year: 1975, rating: 5, actors: ["Amitabh Bachchan", "Dharmendra"]},
+  {title: "Dabangg", year: 2010, rating: 4, actors: ["Salman Khan"]},
+  {title: "Bajrangi Bhaijaan", year: 2015, rating: 5, actors: ["Salman Khan"]},
+  {title: "Chak de India", year: 2007, rating: 4, actors: ["Shah Rukh Khan"]},
+  {title: "3 Idiots", year: 2009, rating: 5, actors: ["Aamir Khan"]}
+])
+
+db.Actors.insertMany([
+  {name: "Salman Khan", movies: ["Dabangg", "Bajrangi Bhaijaan"]},
+  {name: "Amitabh Bachchan", movies: ["Sholay"]},
+  {name: "Dharmendra", movies: ["Sholay"]},
+  {name: "Shah Rukh Khan", movies: ["Chak de India"]},
+  {name: "Aamir Khan", movies: ["3 Idiots"]}
+])
+____________________________________________________________
+a. List movies in which Salman Khan has worked.
+db.Movies.find({actors: "Salman Khan"})
+____________________________________________________________
+b. Update the rating of Sholay to 5.
+db.Movies.updateOne(
+  {title: "Sholay"},
+  {$set: {rating: 5}}
+)
+_________________________________________________________
