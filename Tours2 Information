@@ -1,0 +1,37 @@
+use ToursDB
+
+db.Industries.insertMany([
+  {name: "Kesari", rating: 4.8},
+  {name: "Veena World", rating: 4.5},
+  {name: "MakeMyTrip", rating: 4.2},
+  {name: "SOTC", rating: 4.0},
+  {name: "Thomas Cook", rating: 4.1}
+])
+
+db.Packages.insertMany([
+  {name: "Goa Tour", industry: "Kesari", price: 15000},
+  {name: "Manali Tour", industry: "Kesari", price: 20000},
+  {name: "Kerala Tour", industry: "Veena World", price: 22000},
+  {name: "Shillong Tour", industry: "MakeMyTrip", price: 25000},
+  {name: "Kashmir Tour", industry: "SOTC", price: 30000}
+])
+
+db.Customers.insertMany([
+  {name: "Amit"}, {name: "Neha"}, {name: "Rahul"},
+  {name: "Priya"}, {name: "Karan"}
+])
+
+db.Tours.insertMany([
+  {customer: "Amit", destination: "Goa"},
+  {customer: "Neha", destination: "Manali"},
+  {customer: "Rahul", destination: "Kerala"},
+  {customer: "Priya", destination: "Shillong"},
+  {customer: "Karan", destination: "Kashmir"}
+])
+
+____________________________
+a. List package details provided by Kesari.
+db.Packages.find({industry: "Kesari"})
+____________________________________________
+b. Find the highest-rated tourism industry.
+db.Industries.find().sort({rating: -1}).limit(1)
