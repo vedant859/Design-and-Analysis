@@ -1,0 +1,32 @@
+use FurnitureDB
+
+db.Furniture.insertMany([
+  {name: "Sofa", category: "Seating", material: "Wood", price: 25000, stock: 5},
+  {name: "Bed", category: "Bedroom", material: "Wood", price: 30000, stock: 4},
+  {name: "Chair", category: "Seating", material: "Plastic", price: 1500, stock: 20},
+  {name: "Dining Table", category: "Dining", material: "Wood", price: 18000, stock: 3},
+  {name: "Cupboard", category: "Storage", material: "Wood", price: 12000, stock: 6}
+])
+
+db.Customers.insertMany([
+  {name: "Milind", furniture: ["Sofa"]},
+  {name: "Amit", furniture: ["Chair"]},
+  {name: "Neha", furniture: ["Bed"]},
+  {name: "Rahul", furniture: ["Dining Table"]},
+  {name: "Priya", furniture: ["Cupboard"]}
+])
+
+db.Orders.insertMany([
+  {customer: "Milind", furniture: "Sofa"},
+  {customer: "Amit", furniture: "Chair"},
+  {customer: "Neha", furniture: "Bed"},
+  {customer: "Rahul", furniture: "Dining Table"},
+  {customer: "Priya", furniture: "Cupboard"}
+])
+
+_____________________________________________________
+a. List furniture items costing more than ₹10,000.
+db.Furniture.find({price: {$gt: 10000}})
+________________________________________________________
+b. Find the first five furniture items sorted by price in descending order.
+db.Furniture.find().sort({price: -1}).limit(5)
