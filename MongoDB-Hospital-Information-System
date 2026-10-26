@@ -1,0 +1,36 @@
+use HospitalDB
+
+db.Hospitals.insertMany([
+  {name: "Jehangir Hospital", area: "Camp", specializations: ["Cardiology", "Paediatric"]},
+  {name: "Ruby Hall Clinic", area: "Sassoon Road", specializations: ["Cardiology"]},
+  {name: "Sahyadri Hospital", area: "Deccan", specializations: ["Paediatric"]},
+  {name: "Deenanath Mangeshkar", area: "Erandwane", specializations: ["Neurology"]},
+  {name: "Noble Hospital", area: "Hadapsar", specializations: ["Paediatric"]}
+])
+
+db.Doctors.insertMany([
+  {name: "Dr. A", hospital: "Jehangir Hospital", days: ["Monday"]},
+  {name: "Dr. B", hospital: "Ruby Hall Clinic", days: ["Tuesday"]},
+  {name: "Dr. C", hospital: "Jehangir Hospital", days: ["Friday"]},
+  {name: "Dr. D", hospital: "Sahyadri Hospital", days: ["Monday"]},
+  {name: "Dr. E", hospital: "Jehangir Hospital", days: ["Monday"]}
+])
+
+db.Reviews.insertMany([
+  {person: "Amit", hospital: "Jehangir Hospital", rating: 5},
+  {person: "Neha", hospital: "Ruby Hall Clinic", rating: 4},
+  {person: "Rahul", hospital: "Sahyadri Hospital", rating: 4},
+  {person: "Priya", hospital: "Noble Hospital", rating: 5},
+  {person: "Karan", hospital: "Jehangir Hospital", rating: 3}
+])
+
+__________________________________________________________________
+a. List hospitals with Paediatric specialization.
+db.Hospitals.find({specializations: "Paediatric"})
+
+___________________________________________________________________
+b. List doctors visiting Jehangir Hospital on Mondays.
+db.Doctors.find({
+  hospital: "Jehangir Hospital",
+  days: "Monday"
+})
