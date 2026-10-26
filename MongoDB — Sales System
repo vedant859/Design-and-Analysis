@@ -1,0 +1,41 @@
+use SalesDB
+
+db.Products.insertMany([
+  {name: "Laptop", price: 50000, stock: 10},
+  {name: "Phone", price: 20000, stock: 20},
+  {name: "Keyboard", price: 1500, stock: 50},
+  {name: "Monitor", price: 12000, stock: 15},
+  {name: "Mouse", price: 800, stock: 40}
+])
+
+db.Customers.insertMany([
+  {name: "Amit"},
+  {name: "Neha"},
+  {name: "Rahul"},
+  {name: "Priya"},
+  {name: "Karan"}
+])
+
+db.Orders.insertMany([
+  {orderId: 1, customer: "Amit", value: 55000},
+  {orderId: 2, customer: "Neha", value: 20000},
+  {orderId: 3, customer: "Rahul", value: 9000},
+  {orderId: 4, customer: "Priya", value: 15000},
+  {orderId: 5, customer: "Karan", value: 7000}
+])
+
+db.Invoices.insertMany([
+  {invoiceId: 1, orderId: 1, amount: 55000},
+  {invoiceId: 2, orderId: 2, amount: 20000},
+  {invoiceId: 3, orderId: 3, amount: 9000},
+  {invoiceId: 4, orderId: 4, amount: 15000},
+  {invoiceId: 5, orderId: 5, amount: 7000}
+])
+
+____________________________________________________
+a. List all products in inventory.
+db.Products.find({stock: {$gt: 0}})
+___________________________________________________
+b. List orders with value greater than 10,000.
+db.Orders.find({value: {$gt: 10000}})
+____________________________________
