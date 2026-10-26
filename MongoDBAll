@@ -1,0 +1,453 @@
+
+/* =====================================================
+   SLIP 1, 7, 8, 11 - DEPARTMENT SYSTEM
+   ===================================================== */
+
+use DepartmentDB
+
+db.Students.insertMany([
+  {studentId:1,name:"Amit",gender:"Male",city:"Pune",marks:85},
+  {studentId:2,name:"Sneha",gender:"Female",city:"Mumbai",marks:76},
+  {studentId:3,name:"Rahul",gender:"Male",city:"Pune",marks:92},
+  {studentId:4,name:"Priya",gender:"Female",city:"Nashik",marks:68},
+  {studentId:5,name:"Karan",gender:"Male",city:"Pune",marks:88}
+])
+
+db.Courses.insertMany([
+  {courseId:101,name:"Python"},
+  {courseId:102,name:"Java"},
+  {courseId:103,name:"SQL"},
+  {courseId:104,name:"Computer"},
+  {courseId:105,name:"Web Development"}
+])
+
+db.Marks.insertMany([
+  {studentId:1,studentName:"Amit",percentage:85},
+  {studentId:2,studentName:"Sneha",percentage:76},
+  {studentId:3,studentName:"Rahul",percentage:92},
+  {studentId:4,studentName:"Priya",percentage:68},
+  {studentId:5,studentName:"Karan",percentage:88}
+])
+
+db.Registrations.insertMany([
+  {studentId:1,studentName:"Amit",courseName:"Python"},
+  {studentId:2,studentName:"Sneha",courseName:"Java"},
+  {studentId:3,studentName:"Rahul",courseName:"Python"},
+  {studentId:4,studentName:"Priya",courseName:"Computer"},
+  {studentId:5,studentName:"Karan",courseName:"SQL"}
+])
+
+// Slip 1: Count students scoring above 80%
+db.Marks.countDocuments({percentage:{$gt:80}})
+
+// Slip 1: Count Python registrations
+db.Registrations.countDocuments({courseName:"Python"})
+
+// Slip 7: Count boys from Pune
+db.Students.countDocuments({gender:"Male",city:"Pune"})
+
+// Slip 7: Students in ascending marks order
+db.Students.find().sort({marks:1})
+
+// Slip 8: Students in descending marks order
+db.Students.find().sort({marks:-1})
+
+// Slip 8: Student with lowest marks
+db.Students.find().sort({marks:1}).limit(1)
+
+// Slip 11: Count Computer course registrations
+db.Registrations.countDocuments({courseName:"Computer"})
+
+// Slip 11: Delete Python registrations
+db.Registrations.deleteMany({courseName:"Python"})
+
+
+/* =====================================================
+   SLIP 2, 9, 24 - FURNITURE SHOWROOM
+   ===================================================== */
+
+use FurnitureDB
+
+db.Furniture.insertMany([
+  {name:"Sofa",type:"Seating",material:"Wood",price:25000,stock:10},
+  {name:"Dining Table",type:"Table",material:"Wood",price:18000,stock:5},
+  {name:"Chair",type:"Seating",material:"Plastic",price:1500,stock:20},
+  {name:"Bed",type:"Bedroom",material:"Wood",price:30000,stock:4},
+  {name:"Cupboard",type:"Storage",material:"Steel",price:12000,stock:8}
+])
+
+db.Staff.insertMany([
+  {name:"Ramesh",gender:"Male",section:"Seating"},
+  {name:"Suresh",gender:"Male",section:"Tables"},
+  {name:"Priya",gender:"Female",section:"Bedroom"},
+  {name:"Neha",gender:"Female",section:"Storage"},
+  {name:"Amit",gender:"Male",section:"Seating"}
+])
+
+db.Customers.insertMany([
+  {customerId:1,name:"Milind",city:"Pune"},
+  {customerId:2,name:"Ravi",city:"Mumbai"},
+  {customerId:3,name:"Sneha",city:"Pune"},
+  {customerId:4,name:"Asha",city:"Nashik"},
+  {customerId:5,name:"Kiran",city:"Pune"}
+])
+
+db.Orders.insertMany([
+  {customerName:"Milind",furnitureName:"Sofa",quantity:1},
+  {customerName:"Ravi",furnitureName:"Chair",quantity:4},
+  {customerName:"Sneha",furnitureName:"Bed",quantity:1},
+  {customerName:"Asha",furnitureName:"Dining Table",quantity:1},
+  {customerName:"Kiran",furnitureName:"Sofa",quantity:1}
+])
+
+// Slip 2: Different furniture types
+db.Furniture.distinct("type")
+
+// Slip 2: Male staff names
+db.Staff.find({gender:"Male"},{_id:0,name:1})
+
+// Slip 9: Furniture purchased by Milind
+db.Orders.find({customerName:"Milind"})
+
+// Slip 9: Customers who purchased Sofa
+db.Orders.distinct("customerName",{furnitureName:"Sofa"})
+
+// Slip 24: Furniture priced above 10000
+db.Furniture.find({price:{$gt:10000}})
+
+// Slip 24: First 5 items, highest price first
+db.Furniture.find().sort({price:-1}).limit(5)
+
+
+/* =====================================================
+   SLIP 3, 10 - HOSPITAL INFORMATION SYSTEM
+   ===================================================== */
+
+use HospitalDB
+
+db.Hospitals.insertMany([
+  {name:"Jehangir Hospital",specializations:["Paediatric","Gynaec"]},
+  {name:"Ruby Hospital",specializations:["Gynaec","Cardiology"]},
+  {name:"Sassoon Hospital",specializations:["Paediatric","General"]},
+  {name:"Deenanath Hospital",specializations:["Cardiology","Gynaec"]},
+  {name:"City Hospital",specializations:["Paediatric","General"]}
+])
+
+db.Doctors.insertMany([
+  {name:"Dr. Sharma",hospital:"Jehangir Hospital",visitingDay:"Monday"},
+  {name:"Dr. Patil",hospital:"Ruby Hospital",visitingDay:"Tuesday"},
+  {name:"Dr. Joshi",hospital:"Jehangir Hospital",visitingDay:"Monday"},
+  {name:"Dr. Mehta",hospital:"Ruby Hospital",visitingDay:"Friday"},
+  {name:"Dr. Kulkarni",hospital:"City Hospital",visitingDay:"Monday"}
+])
+
+db.Reviews.insertMany([
+  {person:"Amit",hospital:"Jehangir Hospital",rating:5},
+  {person:"Sneha",hospital:"Ruby Hospital",rating:4},
+  {person:"Rahul",hospital:"Sassoon Hospital",rating:3},
+  {person:"Priya",hospital:"City Hospital",rating:4},
+  {person:"Karan",hospital:"Deenanath Hospital",rating:5}
+])
+
+// Slip 3: Hospitals with Paediatric specialization
+db.Hospitals.find({specializations:"Paediatric"})
+
+// Slip 3: Doctors visiting Jehangir on Monday
+db.Doctors.find({hospital:"Jehangir Hospital",visitingDay:"Monday"})
+
+// Slip 10: Hospitals with Gynaec specialization
+db.Hospitals.find({specializations:"Gynaec"})
+
+// Slip 10: Doctors visiting Ruby Hospital
+db.Doctors.find({hospital:"Ruby Hospital"})
+
+
+/* =====================================================
+   SLIP 4, 25 - ONLINE MOBILE SHOPPING
+   ===================================================== */
+
+use MobileShopDB
+
+db.Mobiles.insertMany([
+  {brand:"Samsung",model:"Samsung J6",price:15000,RAM:"3GB",ROM:"32GB",stock:10},
+  {brand:"Redmi",model:"Note 10",price:18000,RAM:"4GB",ROM:"64GB",stock:15},
+  {brand:"Samsung",model:"Galaxy A14",price:22000,RAM:"3GB",ROM:"32GB",stock:8},
+  {brand:"Vivo",model:"Y21",price:12000,RAM:"3GB",ROM:"32GB",stock:12},
+  {brand:"OnePlus",model:"Nord",price:28000,RAM:"8GB",ROM:"128GB",stock:6}
+])
+
+db.Customers.insertMany([
+  {name:"Amit",address:"Pune",contact:"9000000001"},
+  {name:"Sneha",address:"Mumbai",contact:"9000000002"},
+  {name:"Rahul",address:"Nashik",contact:"9000000003"},
+  {name:"Priya",address:"Pune",contact:"9000000004"},
+  {name:"Karan",address:"Kolhapur",contact:"9000000005"}
+])
+
+db.Orders.insertMany([
+  {customerName:"Amit",mobileModel:"Samsung J6"},
+  {customerName:"Sneha",mobileModel:"Note 10"},
+  {customerName:"Rahul",mobileModel:"Samsung J6"},
+  {customerName:"Priya",mobileModel:"Y21"},
+  {customerName:"Karan",mobileModel:"Nord"}
+])
+
+// Slip 4: Mobiles with 3GB RAM and 32GB ROM
+db.Mobiles.find({RAM:"3GB",ROM:"32GB"})
+
+// Slip 4: Customers who bought Samsung J6
+db.Orders.distinct("customerName",{mobileModel:"Samsung J6"})
+
+// Slip 25: Mobiles costing less than 30000
+db.Mobiles.find({price:{$lt:30000}})
+
+// Slip 25: First 5 mobiles by ascending price
+db.Mobiles.find().sort({price:1}).limit(5)
+
+
+/* =====================================================
+   SLIP 5 - SALES SYSTEM
+   ===================================================== */
+
+use SalesDB
+
+db.Products.insertMany([
+  {productId:1,name:"Laptop",price:55000,stock:10},
+  {productId:2,name:"Mouse",price:500,stock:50},
+  {productId:3,name:"Keyboard",price:1200,stock:25},
+  {productId:4,name:"Monitor",price:9000,stock:8},
+  {productId:5,name:"Printer",price:15000,stock:6}
+])
+
+db.Customers.insertMany([
+  {customerId:1,name:"Amit",city:"Pune"},
+  {customerId:2,name:"Sneha",city:"Mumbai"},
+  {customerId:3,name:"Rahul",city:"Pune"},
+  {customerId:4,name:"Priya",city:"Nashik"},
+  {customerId:5,name:"Karan",city:"Pune"}
+])
+
+db.Orders.insertMany([
+  {orderId:101,customerName:"Amit",value:55000},
+  {orderId:102,customerName:"Sneha",value:7000},
+  {orderId:103,customerName:"Rahul",value:12000},
+  {orderId:104,customerName:"Priya",value:9000},
+  {orderId:105,customerName:"Karan",value:18000}
+])
+
+db.Invoices.insertMany([
+  {invoiceId:1,orderId:101,amount:55000},
+  {invoiceId:2,orderId:102,amount:7000},
+  {invoiceId:3,orderId:103,amount:12000},
+  {invoiceId:4,orderId:104,amount:9000},
+  {invoiceId:5,orderId:105,amount:18000}
+])
+
+// Slip 5: All products in inventory
+db.Products.find()
+
+// Slip 5: Orders worth more than 10000
+db.Orders.find({value:{$gt:10000}})
+
+
+/* =====================================================
+   SLIP 6, 21, 22 - TOURS INFORMATION
+   ===================================================== */
+
+use ToursDB
+
+db.Packages.insertMany([
+  {packageName:"Goa Trip",provider:"Veena World",destination:"Goa",price:15000},
+  {packageName:"Shimla Tour",provider:"MakeMyTrip",destination:"Shimla",price:22000},
+  {packageName:"Shillong Tour",provider:"Kesari",destination:"Shillong",price:25000},
+  {packageName:"Kerala Trip",provider:"Veena World",destination:"Kerala",price:18000},
+  {packageName:"Manali Tour",provider:"MakeMyTrip",destination:"Manali",price:20000}
+])
+
+db.Industries.insertMany([
+  {name:"Veena World",rating:4.5},
+  {name:"MakeMyTrip",rating:4.8},
+  {name:"Kesari",rating:4.6},
+  {name:"Thomas Cook",rating:4.2},
+  {name:"SOTC",rating:4.1}
+])
+
+db.Customers.insertMany([
+  {name:"Amit",destination:"Shillong"},
+  {name:"Sneha",destination:"Goa"},
+  {name:"Rahul",destination:"Shillong"},
+  {name:"Priya",destination:"Kerala"},
+  {name:"Karan",destination:"Manali"}
+])
+
+// Slip 6: Packages by Veena World
+db.Packages.find({provider:"Veena World"})
+
+// Slip 6: Highest-rated tourism industry
+db.Industries.find().sort({rating:-1}).limit(1)
+
+// Slip 21: Packages by MakeMyTrip
+db.Packages.find({provider:"MakeMyTrip"})
+
+// Slip 21: Count customers who went to Shillong
+db.Customers.countDocuments({destination:"Shillong"})
+
+// Slip 22: Packages by Kesari
+db.Packages.find({provider:"Kesari"})
+
+// Slip 22: Highest-rated tourism industry
+db.Industries.find().sort({rating:-1}).limit(1)
+
+
+/* =====================================================
+   SLIP 12, 13, 16, 20, 23 - FILM SYSTEM
+   ===================================================== */
+
+use FilmDB
+
+db.Movies.insertMany([
+  {title:"Chak de India",releaseYear:2007,duration:150,rating:4.5,actors:["Shah Rukh Khan"]},
+  {title:"Sholay",releaseYear:1975,duration:204,rating:4.8,actors:["Amitabh Bachchan","Dharmendra"]},
+  {title:"Dabangg",releaseYear:2010,duration:130,rating:3.5,actors:["Salman Khan"]},
+  {title:"Bajrangi Bhaijaan",releaseYear:2015,duration:159,rating:4.6,actors:["Salman Khan"]},
+  {title:"Tiger Zinda Hai",releaseYear:2017,duration:161,rating:4.2,actors:["Salman Khan"]}
+])
+
+db.Actors.insertMany([
+  {name:"Salman Khan",movies:["Dabangg","Bajrangi Bhaijaan","Tiger Zinda Hai"]},
+  {name:"Shah Rukh Khan",movies:["Chak de India"]},
+  {name:"Amitabh Bachchan",movies:["Sholay"]},
+  {name:"Dharmendra",movies:["Sholay"]},
+  {name:"Kareena Kapoor",movies:["Bajrangi Bhaijaan"]}
+])
+
+// Slip 12: Count movies released in 1998
+db.Movies.countDocuments({releaseYear:1998})
+
+// Slip 12: Count movies rated above 4
+db.Movies.countDocuments({rating:{$gt:4}})
+
+// Slip 13: Actors in Chak de India
+db.Movies.find({title:"Chak de India"},{_id:0,actors:1})
+
+// Slip 13: Count movies rated 3 or lower
+db.Movies.countDocuments({rating:{$lte:3}})
+
+// Slip 16: Movies featuring Salman Khan
+db.Movies.find({actors:"Salman Khan"})
+
+// Slip 16: Update Sholey's rating to 5
+db.Movies.updateOne({title:"Sholay"},{$set:{rating:5}})
+
+// Slip 20: Movies released in or before 2012
+db.Movies.find({releaseYear:{$lte:2012}})
+
+// Slip 20: Last 5 movies in ascending release-year order
+db.Movies.find().sort({releaseYear:1}).skip(
+  Math.max(0,db.Movies.countDocuments()-5)
+)
+
+// Slip 23: Movies released in or after 2012
+db.Movies.find({releaseYear:{$gte:2012}})
+
+// Slip 23: First 5 movies sorted by release year descending
+db.Movies.find().sort({releaseYear:-1}).limit(5)
+
+
+/* =====================================================
+   SLIP 14, 17 - UNIVERSITY AND COLLEGES
+   ===================================================== */
+
+use UniversityDB
+
+db.Colleges.insertMany([
+  {name:"College A",courses:["Arts","Science"]},
+  {name:"College B",courses:["Science","Engineering"]},
+  {name:"College C",courses:["Arts","Commerce"]},
+  {name:"College D",courses:["Engineering","Management"]},
+  {name:"College E",courses:["Arts","Engineering"]}
+])
+
+db.Professors.insertMany([
+  {name:"Dr. Patil",age:45,college:"College A"},
+  {name:"Dr. Sharma",age:35,college:"College B"},
+  {name:"Dr. Joshi",age:39,college:"College C"},
+  {name:"Dr. Mehta",age:50,college:"College D"},
+  {name:"Dr. Kulkarni",age:32,college:"College E"}
+])
+
+// Slip 14: Colleges conducting Arts
+db.Colleges.find({courses:"Arts"})
+
+// Slip 14: Professors older than 40
+db.Professors.find({age:{$gt:40}})
+
+// Slip 17: Colleges conducting both Science and Engineering
+db.Colleges.find({courses:{$all:["Science","Engineering"]}})
+
+// Slip 17: Professors younger than 40
+db.Professors.find({age:{$lt:40}})
+
+
+/* =====================================================
+   SLIP 15, 18, 19 - COSMETICS INFORMATION SYSTEM
+   ===================================================== */
+
+use CosmeticsDB
+
+db.Products.insertMany([
+  {name:"Lipstick",brandName:"Lakme",expiryDate:"30-11-2019",rating:4.2},
+  {name:"Foundation",brandName:"Maybelline",expiryDate:"30-11-2025",rating:4.5},
+  {name:"Mascara",brandName:"Maybelline",expiryDate:"15-12-2025",rating:4.1},
+  {name:"Face Cream",brandName:"Lakme",expiryDate:"20-10-2025",rating:3.8},
+  {name:"Compact Powder",brandName:"Maybelline",expiryDate:"30-11-2019",rating:2.9},
+  {name:"Kajal",brandName:"Lakme",expiryDate:"10-10-2026",rating:4.0},
+  {name:"Lip Gloss",brandName:"Maybelline",expiryDate:"30-11-2025",rating:3.5},
+  {name:"Moisturizer",brandName:"Nivea",expiryDate:"01-01-2026",rating:4.3},
+  {name:"Eyeliner",brandName:"Lakme",expiryDate:"30-11-2019",rating:3.0},
+  {name:"Blush",brandName:"Maybelline",expiryDate:"30-11-2025",rating:4.7}
+])
+
+db.Customers.insertMany([
+  {name:"Amit",city:"Pune"},
+  {name:"Sneha",city:"Mumbai"},
+  {name:"Rahul",city:"Nashik"},
+  {name:"Priya",city:"Pune"},
+  {name:"Karan",city:"Kolhapur"},
+  {name:"Neha",city:"Mumbai"},
+  {name:"Ravi",city:"Pune"},
+  {name:"Asha",city:"Nashik"},
+  {name:"Sonal",city:"Pune"},
+  {name:"Vikas",city:"Mumbai"}
+])
+
+db.Orders.insertMany([
+  {customerName:"Amit",productName:"Lakme Lipstick"},
+  {customerName:"Sneha",productName:"Foundation"},
+  {customerName:"Rahul",productName:"Lakme Lipstick"},
+  {customerName:"Priya",productName:"Mascara"},
+  {customerName:"Karan",productName:"Lip Gloss"},
+  {customerName:"Neha",productName:"Lakme Lipstick"},
+  {customerName:"Ravi",productName:"Kajal"},
+  {customerName:"Asha",productName:"Blush"},
+  {customerName:"Sonal",productName:"Lakme Lipstick"},
+  {customerName:"Vikas",productName:"Moisturizer"}
+])
+
+// Slip 15: Products expiring on 30-11-2019
+db.Products.find({expiryDate:"30-11-2019"})
+
+// Slip 15: Products rated above 3 with brand names
+db.Products.find({rating:{$gt:3}},{_id:0,name:1,brandName:1,rating:1})
+
+// Slip 18: Products of Maybelline
+db.Products.find({brandName:"Maybelline"})
+
+// Slip 18: Customers who bought Lakme Lipstick
+db.Orders.distinct("customerName",{productName:"Lakme Lipstick"})
+
+// Slip 19: Products expiring on 30-11-2025
+db.Products.find({expiryDate:"30-11-2025"})
+
+// Slip 19: Customers who bought Lakme Lipstick
+db.Orders.distinct("customerName",{productName:"Lakme Lipstick"})
