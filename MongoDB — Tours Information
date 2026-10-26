@@ -1,0 +1,41 @@
+use ToursDB
+
+db.Industries.insertMany([
+  {name: "MakeMyTrip", rating: 4.5},
+  {name: "Veena World", rating: 4.8},
+  {name: "Kesari", rating: 4.3},
+  {name: "Thomas Cook", rating: 4.1},
+  {name: "SOTC", rating: 4.0}
+])
+
+db.Packages.insertMany([
+  {name: "Shillong Explorer", industry: "MakeMyTrip", price: 25000},
+  {name: "Manali Tour", industry: "MakeMyTrip", price: 18000},
+  {name: "Goa Holiday", industry: "Veena World", price: 15000},
+  {name: "Kashmir Tour", industry: "Kesari", price: 30000},
+  {name: "Kerala Tour", industry: "Thomas Cook", price: 22000}
+])
+
+db.Tours.insertMany([
+  {customer: "Amit", destination: "Shillong", package: "Shillong Explorer"},
+  {customer: "Neha", destination: "Manali", package: "Manali Tour"},
+  {customer: "Rahul", destination: "Shillong", package: "Shillong Explorer"},
+  {customer: "Priya", destination: "Goa", package: "Goa Holiday"},
+  {customer: "Karan", destination: "Kerala", package: "Kerala Tour"}
+])
+
+db.Customers.insertMany([
+  {name: "Amit"},
+  {name: "Neha"},
+  {name: "Rahul"},
+  {name: "Priya"},
+  {name: "Karan"}
+])
+
+
+__________________________
+a. List package details provided by MakeMyTrip.
+db.Packages.find({industry: "MakeMyTrip"})
+__________________________________________________
+b. Count customers who went on a tour to Shillong.
+db.Tours.countDocuments({destination: "Shillong"})
