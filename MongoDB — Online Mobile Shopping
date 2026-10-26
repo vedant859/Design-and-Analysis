@@ -1,0 +1,32 @@
+use MobileDB
+
+db.Mobiles.insertMany([
+  {brand: "Samsung", model: "Samsung J6", ram: 3, rom: 32, price: 12000},
+  {brand: "Samsung", model: "M31", ram: 6, rom: 128, price: 18000},
+  {brand: "Redmi", model: "Note 7", ram: 3, rom: 32, price: 10000},
+  {brand: "Vivo", model: "Y20", ram: 4, rom: 64, price: 14000},
+  {brand: "Oppo", model: "A5", ram: 3, rom: 32, price: 11000}
+])
+
+db.Customers.insertMany([
+  {name: "Amit", mobile: "Samsung J6"},
+  {name: "Neha", mobile: "M31"},
+  {name: "Rahul", mobile: "Samsung J6"},
+  {name: "Priya", mobile: "Y20"},
+  {name: "Karan", mobile: "Note 7"}
+])
+
+db.Orders.insertMany([
+  {orderId: 1, customer: "Amit", mobile: "Samsung J6"},
+  {orderId: 2, customer: "Neha", mobile: "M31"},
+  {orderId: 3, customer: "Rahul", mobile: "Samsung J6"},
+  {orderId: 4, customer: "Priya", mobile: "Y20"},
+  {orderId: 5, customer: "Karan", mobile: "Note 7"}
+])
+
+_________________________________________________________
+a. List mobiles with RAM 3 GB and ROM 32 GB.
+db.Mobiles.find({ram: 3, rom: 32})
+_______________________________________________________
+b. List customers who bought Samsung J6.
+db.Orders.find({mobile: "Samsung J6"})
